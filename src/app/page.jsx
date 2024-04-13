@@ -14,8 +14,6 @@ export default async function Home() {
     },
   }).then(async (res) => await res.json());
 
-  console.log(summary);
-
   return (
     <main className="dark bg-black-200 min-h-screen text-white sm:px-20 px-10 py-10">
       <h1 className="text-[40px] leading-[120%] font-bold">To-Do App</h1>
@@ -23,7 +21,7 @@ export default async function Home() {
       <section className="mt-10">
         <TaskForm buttonText={"Add a task ➕"} />
 
-        {/* <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-5 gap-y-3 mt-10">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-5 gap-y-3 mt-10">
           {tasks.map((task, index) => (
             <TaskCard
               key={index}
@@ -33,10 +31,10 @@ export default async function Home() {
               id={task._id}
             />
           ))}
-        </div> */}
+        </div>
       </section>
 
-      {/* <section className="mt-10">
+      <section className="mt-10">
         <h2 className="text-[40px] leading-[120%] font-bold">Summary</h2>
 
         <div className="space-y-2 mt-5">
@@ -52,7 +50,7 @@ export default async function Home() {
             <span className="font-bold">{summary[0].pending}</span>
           </p>
         </div>
-      </section> */}
+      </section>
     </main>
   );
 }
