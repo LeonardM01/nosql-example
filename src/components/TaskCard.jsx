@@ -14,6 +14,7 @@ const TaskCard = ({ title, dueDate, completed, id, tag }) => {
         <div className="flex flex-col">
           <CardTitle>{title}</CardTitle>
           <p> Due Date: {format(dueDate, "PPP")}</p>
+
           {tag && (
             <small className="py-1 px-2 mt-2 w-fit rounded-xl bg-red-400">
               {tag}
@@ -28,6 +29,7 @@ const TaskCard = ({ title, dueDate, completed, id, tag }) => {
             buttonText={"Edit"}
             title={title}
             dueDate={dueDate}
+            tag={tag}
           />
 
           <button

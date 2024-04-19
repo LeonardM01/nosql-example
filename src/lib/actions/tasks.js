@@ -2,7 +2,7 @@
 
 import Task from "@/schemas/task.model";
 import { connectToDatabase } from "../mongoose";
-import { revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 export async function createTask(title, dueDate, tag) {
   connectToDatabase();
@@ -16,8 +16,8 @@ export async function createTask(title, dueDate, tag) {
 
     await task.save();
 
-    revalidateTag("tasks");
-    revalidateTag("summary");
+    revalidatePath("/");
+    revalidatePath("/");
 
     return { status: 200 };
   } catch (error) {
@@ -32,7 +32,7 @@ export async function getTasks() {
   try {
     const tasks = await Task.find();
 
-    return { status: 200, tasks };
+    return tasks;
   } catch (error) {
     console.log("Error getting tasks", error);
     return { status: 500, error };
@@ -40,7 +40,7 @@ export async function getTasks() {
 }
 
 export async function updateTask(id, completed, title, dueDate, tag) {
-  connectToDatabase();
+  await connectToDatabase();
 
   try {
     const tasks = await Task.updateOne(
@@ -48,8 +48,8 @@ export async function updateTask(id, completed, title, dueDate, tag) {
       { completed, title, dueDate, tag }
     );
 
-    revalidateTag("tasks");
-    revalidateTag("summary");
+    revalidatePath("/");
+    revalidatePath("/");
 
     return { status: 200, tasks };
   } catch (error) {
