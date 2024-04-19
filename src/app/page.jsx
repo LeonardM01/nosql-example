@@ -5,6 +5,7 @@ export default async function Home() {
   const tasks = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/tasks`, {
     next: {
       tags: ["tasks"],
+      revalidate: 0,
     },
   }).then(async (res) => {
     if (res.status === 200) return await res.json();
@@ -16,6 +17,7 @@ export default async function Home() {
     {
       next: {
         tags: ["summary"],
+        revalidate: 0,
       },
     }
   ).then(async (res) => {
@@ -38,6 +40,7 @@ export default async function Home() {
               dueDate={task.dueDate}
               completed={task.completed}
               id={task._id}
+              tag={task.tag}
             />
           ))}
         </div>

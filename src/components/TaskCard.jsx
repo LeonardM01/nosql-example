@@ -7,13 +7,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { updateTask } from "@/lib/actions/tasks";
 import TaskForm from "./TaskForm";
 
-const TaskCard = ({ title, dueDate, completed, id }) => {
+const TaskCard = ({ title, dueDate, completed, id, tag }) => {
   return (
     <Card>
       <CardContent className="flex justify-between items-center p-6">
-        <div>
+        <div className="flex flex-col">
           <CardTitle>{title}</CardTitle>
           <p> Due Date: {format(dueDate, "PPP")}</p>
+          {tag && (
+            <small className="py-1 px-2 mt-2 w-fit rounded-xl bg-red-400">
+              {tag}
+            </small>
+          )}
         </div>
 
         <div className="flex justify-center items-center gap-x-2">
@@ -26,7 +31,7 @@ const TaskCard = ({ title, dueDate, completed, id }) => {
           />
 
           <button
-            onClick={() => updateTask(id, !completed, title, dueDate)}
+            onClick={() => updateTask(id, !completed, title, dueDate, tag)}
             className="!size-10 flex justify-center items-center rounded-full bg-black-400"
           >
             {completed && (

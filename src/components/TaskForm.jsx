@@ -36,7 +36,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { createTask, updateTask } from "@/lib/actions/tasks";
 
-const TaskForm = ({ id, title, dueDate, buttonText, completed }) => {
+const TaskForm = ({ id, title, dueDate, buttonText, completed, tag }) => {
   const { toast } = useToast();
 
   const FormSchema = z.object({
@@ -44,14 +44,15 @@ const TaskForm = ({ id, title, dueDate, buttonText, completed }) => {
     dueDate: z.date({
       required_error: "A due date is required.",
     }),
-    // tag: z.string().optional(),
+    tag: z.string().optional(),
   });
 
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       title: title || "",
-      dueDate: new Date(dueDate) || null,
+      dueDate: dueDate ? new Date(dueDate) : null,
+      tag: tag || "",
     },
   });
 
@@ -59,10 +60,9 @@ const TaskForm = ({ id, title, dueDate, buttonText, completed }) => {
     let res;
 
     if (title) {
-      console.log("hey");
-      res = await updateTask(id, completed, data.title, data.dueDate);
+      res = await updateTask(id, completed, data.title, data.dueDate, data.tag);
     } else {
-      res = await createTask(data.title, data.dueDate);
+      res = await createTask(data.title, data.dueDate, data.tag);
     }
 
     if (res.status === 200) {
@@ -151,7 +151,7 @@ const TaskForm = ({ id, title, dueDate, buttonText, completed }) => {
                 </FormItem>
               )}
             />
-            {/* <FormField
+            <FormField
               control={form.control}
               name="tag"
               render={({ field }) => (
@@ -167,7 +167,7 @@ const TaskForm = ({ id, title, dueDate, buttonText, completed }) => {
                   <FormMessage />
                 </FormItem>
               )}
-            /> */}
+            />
 
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>

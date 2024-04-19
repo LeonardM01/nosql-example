@@ -4,13 +4,14 @@ import Task from "@/schemas/task.model";
 import { connectToDatabase } from "../mongoose";
 import { revalidateTag } from "next/cache";
 
-export async function createTask(title, dueDate) {
+export async function createTask(title, dueDate, tag) {
   await connectToDatabase();
 
   try {
     const task = new Task({
       title,
       dueDate,
+      tag,
     });
 
     await task.save();
@@ -38,13 +39,13 @@ export async function getTasks() {
   }
 }
 
-export async function updateTask(id, completed, title, dueDate) {
+export async function updateTask(id, completed, title, dueDate, tag) {
   await connectToDatabase();
 
   try {
     const tasks = await Task.updateOne(
       { _id: id },
-      { completed, title, dueDate }
+      { completed, title, dueDate, tag }
     );
 
     revalidateTag("tasks");
