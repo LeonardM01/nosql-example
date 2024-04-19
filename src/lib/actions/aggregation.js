@@ -27,7 +27,6 @@ export async function completedVsPendingTasks() {
       },
     ]);
 
-    console.log(summary);
     return { status: 200, summary };
   } catch (error) {
     return { status: 500, error };

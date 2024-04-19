@@ -6,7 +6,10 @@ export default async function Home() {
     next: {
       tags: ["tasks"],
     },
-  }).then(async (res) => await res.json());
+  }).then(async (res) => {
+    if (res.status === 200) return await res.json();
+    return [];
+  });
 
   const summary = await fetch(
     `${process.env.NEXT_PUBLIC_URL}/api/aggregation`,
@@ -15,7 +18,10 @@ export default async function Home() {
         tags: ["summary"],
       },
     }
-  ).then(async (res) => await res.json());
+  ).then(async (res) => {
+    if (res.status === 200) return await res.json();
+    return null;
+  });
 
   return (
     <main className="dark bg-black-200 min-h-screen text-white sm:px-20 px-10 py-10">
@@ -37,23 +43,25 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="mt-10">
-        <h2 className="text-[40px] leading-[120%] font-bold">Summary</h2>
+      {summary && (
+        <section className="mt-10">
+          <h2 className="text-[40px] leading-[120%] font-bold">Summary</h2>
 
-        <div className="space-y-2 mt-5">
-          <p>
-            Total tasks: <span className="font-bold">{summary[0].total}</span>
-          </p>
-          <p>
-            Completed tasks:{" "}
-            <span className="font-bold">{summary[0].completed}</span>
-          </p>
-          <p>
-            Pending tasks:{" "}
-            <span className="font-bold">{summary[0].pending}</span>
-          </p>
-        </div>
-      </section>
+          <div className="space-y-2 mt-5">
+            <p>
+              Total tasks: <span className="font-bold">{summary[0].total}</span>
+            </p>
+            <p>
+              Completed tasks:{" "}
+              <span className="font-bold">{summary[0].completed}</span>
+            </p>
+            <p>
+              Pending tasks:{" "}
+              <span className="font-bold">{summary[0].pending}</span>
+            </p>
+          </div>
+        </section>
+      )}
     </main>
   );
 }
