@@ -5,7 +5,7 @@ import { connectToDatabase } from "../mongoose";
 import { revalidateTag } from "next/cache";
 
 export async function createTask(title, dueDate, tag) {
-  await connectToDatabase();
+  connectToDatabase();
 
   try {
     const task = new Task({
@@ -27,7 +27,7 @@ export async function createTask(title, dueDate, tag) {
 }
 
 export async function getTasks() {
-  await connectToDatabase();
+  connectToDatabase();
 
   try {
     const tasks = await Task.find();
@@ -40,7 +40,7 @@ export async function getTasks() {
 }
 
 export async function updateTask(id, completed, title, dueDate, tag) {
-  await connectToDatabase();
+  connectToDatabase();
 
   try {
     const tasks = await Task.updateOne(

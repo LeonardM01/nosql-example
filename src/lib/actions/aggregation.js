@@ -2,7 +2,7 @@ import Task from "@/schemas/task.model";
 import { connectToDatabase } from "../mongoose";
 
 export async function completedVsPendingTasks() {
-  await connectToDatabase();
+  connectToDatabase();
 
   try {
     const summary = await Task.aggregate([
