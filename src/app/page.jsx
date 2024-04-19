@@ -2,17 +2,20 @@ import TaskForm from "@/components/TaskForm";
 import TaskCard from "@/components/TaskCard";
 
 export default async function Home() {
-  const tasks = await fetch("http://localhost:3000/api/tasks", {
+  const tasks = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/tasks`, {
     next: {
       tags: ["tasks"],
     },
   }).then(async (res) => await res.json());
 
-  const summary = await fetch("http://localhost:3000/api/aggregation", {
-    next: {
-      tags: ["summary"],
-    },
-  }).then(async (res) => await res.json());
+  const summary = await fetch(
+    `${process.env.NEXT_PUBLIC_URL}/api/aggregation`,
+    {
+      next: {
+        tags: ["summary"],
+      },
+    }
+  ).then(async (res) => await res.json());
 
   return (
     <main className="dark bg-black-200 min-h-screen text-white sm:px-20 px-10 py-10">
